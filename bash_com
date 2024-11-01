@@ -1,0 +1,2 @@
+conda activate com-env
+export PYTHONPATH="${PWD}:$PYTHONPATH"
