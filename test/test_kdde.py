@@ -3,13 +3,15 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
+from matplotlib import colormaps
 
 N = 100
-omega = 1
+omega = np.ones(N)
 c = 42
 q = 0.05
 A = np.random.choice([1, 0], size=(N,N), p=[q,1-q] )
 tau = np.random.uniform(np.pi/5, 2*np.pi, size=(N,N) )
+#tau = np.zeros((N,N))
 
 t_sim = 400
 dt = 0.2
@@ -28,7 +30,7 @@ ax_adj.set_title('Adjacency Matrix')
 ax_delay.pcolormesh(tau)
 ax_delay.set_title('Delay Matrix')
 
-I = slv.__solve_Kuramoto_DDE(
+res = slv.__solve_Kuramoto_DDE(
     N,
     omega,
     c,
@@ -38,7 +40,9 @@ I = slv.__solve_Kuramoto_DDE(
     dt
 )
 
-print(I)
+plt.figure()
 
-
+print(res['theta'].shape)
+print(res['t'].shape)
+plt.pcolormesh(res['t'], np.arange(N), res['theta'], cmap='twilight')
 plt.show()
